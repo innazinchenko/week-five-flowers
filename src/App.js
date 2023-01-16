@@ -1,25 +1,59 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from 'react';
+import { data } from './data';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+  const [flowers, setFlowers] = useState (data);
+    
+  const removeFlower = (id) => {
+        let newFlower = flowers.filter((flower) => flower.id !== id);
+        setFlowers(newFlower)
+  }
+  
+    return (
+      <div>
+  
+      <div className="container">
+       <h1>CREATE YOUR OWN BOUQUET!</h1>
+       </div>
+
+       <div className="container">
+       <h2>Just remove the flowers you don't want to receive.</h2>
+      </div>
+  
+      {flowers.map((flower => {
+        const { id, item, description, image } = flower;
+        return (
+          <div key={id}>
+  
+          <div className="container">
+            <h2>{id} - {item}</h2>
+            </div>
+  
+            <div className="container">
+            <p>{description}</p>
+            </div>
+  
+            <div className="container">
+            <img src={image} alt='pretty flower' width='400px'/>
+            </div>
+  
+            <div className="container">
+            <button className="btn" onClick={() => removeFlower(id)}>Remove</button>
+            </div>
+  
+            </div>
+        )
+      }))}
+
+<div className='container'>
+  <button className="btn" onClick={() => setFlowers([])}>Delete all</button>
+</div>
+
+
+      </div>
+    );
+  }
+  
 
 export default App;
